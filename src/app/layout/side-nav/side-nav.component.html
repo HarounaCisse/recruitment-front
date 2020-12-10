@@ -1,0 +1,25 @@
+<mat-sidenav-container class="container">
+  <mat-sidenav #sidenav class="mat-elevation-z0"
+  [opened]="!isItSmall()"
+  [mode]=" isItSmall()? 'push': 'side'">
+    <mat-toolbar>
+      <mat-icon>home</mat-icon>
+      <span>Company</span>
+    </mat-toolbar>
+    <mat-nav-list>
+      List ....
+      List ....
+      <!-- <a mat-list-item [routerLink]="['/manager', speaker.id]"
+                *ngFor="let speaker of mySpeakers">
+                   {{ speaker?.first_name }} </a> -->
+    </mat-nav-list>
+
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <app-top-bar (toggleSidenav)="sidenav.toggle()"></app-top-bar>
+    <div class="wrapper">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+
+</mat-sidenav-container>

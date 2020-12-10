@@ -1,0 +1,1 @@
+ng g c cv --inline-style=false --skip-tests=true  -d
