@@ -1,0 +1,3 @@
+export enum Langues {
+  AUCUN,DEBUTANT,INTERMEDIAIRE,AVANCE
+}

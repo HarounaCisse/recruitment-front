@@ -1,1 +1,89 @@
-<p>offer-list works!</p>
+<div fxFlex="100" fxLayout="row" class="flex-container" >
+  <div fxFlex="25" fxLayout="column" class="flex-filter" >
+    <div fxLayout="row" fxLayoutAlign="start center" >
+      <button mat-raised-button color="primary" (click)="showAdd()">
+          <i class="material-icons">add</i> Ajouter
+      </button>
+  </div>
+    <a href="#">lien1</a>
+    <a href="#">lien2</a>
+    <a href="#">lien3</a>
+  </div>
+  <div  fxLayoutGap="20px" class="flx-item" *ngFor="let item of offers">
+    <mat-card class="offer-card">
+      <mat-card-header>
+        <mat-card-title>Job title</mat-card-title>
+        <mat-card-subtitle>Expire Date</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content><h5>Description</h5>
+      <p><a href="#">Lorem ipsum dolor sit amet, consectetur adipiscing elit,  sed do eiusmod tempor
+        incididunt ut labore et
+        dolore
+        magna aliqua.</a></p>
+        <!-- Lorem ipsum dolor sit amet, consectetur adipiscing elit,  sed do eiusmod tempor
+        incididunt ut labore et
+        dolore
+        magna aliqua.</p> -->
+      </mat-card-content>
+      <mat-card-actions><button mat-button type="submit">Apply</button></mat-card-actions>
+    </mat-card>
+    <mat-card class="offer-card">
+      <mat-card-header>
+        <mat-card-title>{{item.title}}</mat-card-title>
+        <mat-card-subtitle>{{item.expireDate}}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content><h5>Description</h5>
+      <p><a href="#" [routerLink]="['/offers', item.id]">{{item.description}}</a></p>
+      </mat-card-content>
+      <!-- <mat-card-actions><button mat-button type="submit"
+        (click)="detail()">DETAIL</button></mat-card-actions>-->
+    </mat-card>
+    <mat-card class="offer-card">
+      <mat-card-header>
+        <mat-card-title>Job title</mat-card-title>
+        <mat-card-subtitle>Expire Date</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content><h5>Description</h5>
+      <p><a href="#">Lorem ipsum dolor sit amet, consectetur adipiscing elit,  sed do eiusmod tempor
+        incididunt ut labore et
+        dolore
+        magna aliqua.</a></p>
+      </mat-card-content>
+      <mat-card-actions><button mat-button type="submit">Apply</button></mat-card-actions>
+    </mat-card>
+    <mat-card class="offer-card">
+      <mat-card-header>
+        <mat-card-title>Job title</mat-card-title>
+        <mat-card-subtitle>Expire Date</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content><h5>Description</h5>
+      <p><a href="#">Lorem ipsum dolor sit amet, consectetur adipiscing elit,  sed do eiusmod tempor
+        incididunt ut labore et
+        dolore
+        magna aliqua.</a></p>
+        <!-- Lorem ipsum dolor sit amet, consectetur adipiscing elit,  sed do eiusmod tempor
+        incididunt ut labore et
+        dolore
+        magna aliqua.</p> -->
+      </mat-card-content>
+      <mat-card-actions><button mat-button type="submit">Apply</button></mat-card-actions>
+    </mat-card>
+    <mat-card class="offer-card">offer-list works!</mat-card>
+
+    <mat-paginator [length]="10"
+              [pageSize]="5"
+              [pageSizeOptions]="[5, 10, 25, 100]">
+</mat-paginator>
+  </div>
+
+
+ <!-- <div class="parent-container">
+    <div class="child-list">
+      <mat-nav-list>
+         <a mat-list-item [routerLink]="['/manager', offer.id]"
+                  *ngFor="let offer of offers">
+                     {{ offer?.title }} </a>
+      </mat-nav-list>
+    </div>
+  </div>-->
+</div>

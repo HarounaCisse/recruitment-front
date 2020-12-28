@@ -7,9 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RecruitmentComponent implements OnInit {
 
+  sideBarOpen: boolean = true;
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  sideBarToggler() {
+    this.sideBarOpen = !this.sideBarOpen;
   }
 
 }

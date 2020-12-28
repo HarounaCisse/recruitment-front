@@ -9,6 +9,7 @@ import { OfferFormComponent } from './component/offer/offer-form/offer-form.comp
 import { CvFormComponent } from './component/cv/cv-form/cv-form.component';
 import { CvListComponent } from './component/cv/cv-list/cv-list.component';
 import { SharedModule } from '../shared/shared.module';
+import { OfferDetailComponent } from './component/offer/offer-detail/offer-detail.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { SharedModule } from '../shared/shared.module';
     OfferListComponent,
     OfferFormComponent,
     CvListComponent,
-    CvFormComponent],
+    CvFormComponent,
+    OfferDetailComponent],
   imports: [
     CommonModule,
     SharedModule,

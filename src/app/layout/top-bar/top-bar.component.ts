@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 })
 export class TopBarComponent implements OnInit {
 
+
   @Output()toggleSidenav = new EventEmitter();
 
   constructor() { }
@@ -17,6 +18,17 @@ export class TopBarComponent implements OnInit {
   ngOnInit(): void {
     this.toggleSidenav.emit
   }
+
+  toggleSideBar() {
+    this.toggleSidenav.emit();
+    // setTimeout(() => {
+    //   window.dispatchEvent(
+    //     new Event('resize')
+    //   );
+    // }, 300);
+  }
+
+
 
 
 

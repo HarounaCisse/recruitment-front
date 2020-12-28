@@ -1,11 +1,11 @@
 <mat-toolbar color="primary" class="mat-elevation-z6">
-  <button mat-button class="side-toggle" (click)="toggleSidenav.emit()">
+  <button mat-button class="side-toggle" (click)="toggleSideBar()">
     <mat-icon>menu</mat-icon>
   </button>
   <!-- <button mat-button (click)="home()"><mat-icon>home</mat-icon>
     <span >My Application</span>
   </button> -->
-  <span class="example-spacer"></span>
+  <span class="spacer"></span>
   <button mat-button [matMenuTriggerFor]="menu"><mat-icon>add</mat-icon></button>
 <mat-menu #menu="matMenu">
   <button mat-menu-item>

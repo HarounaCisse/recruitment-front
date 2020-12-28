@@ -7,6 +7,24 @@
   right: 0;
   background: #eee;
 }
-.wrapper{
-  margin: 40px;
+
+:host {
+  .mat-icon {
+    vertical-align: middle;
+    margin-right: 20px;
+  }
+  .profile-card {
+    text-align: center;
+    padding: 0 20px 20px 20px;
+    img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+  }
 }
+
+// .wrapper{
+//   margin: 40px;
+// }

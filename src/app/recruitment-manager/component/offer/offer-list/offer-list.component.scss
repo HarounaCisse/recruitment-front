@@ -1,0 +1,33 @@
+.flex-container{
+  display: flex;
+  // flex-direction: column;
+}
+.flex-filter{
+ flex-direction: column;
+}
+.offer-card {
+  // flex-direction: column;
+  // flex-wrap: wrap;
+  margin: 10px;
+  max-width: 350px;
+  max-height: 150px;
+  display: flex;
+  justify-content:space-between
+
+  // max-width: 100px;
+  // width: 80%;
+}
+.offer-card p{
+transition-property: all;
+justify-self:auto
+}
+.flx-item{
+  display: flex;
+  flex-basis: 100%;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+// .flex-item .offer-card{
+//   width: 350px;
+//   height: 300px;
+// }

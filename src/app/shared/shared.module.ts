@@ -49,6 +49,8 @@ import { TopBarComponent } from '../layout/top-bar/top-bar.component';
 import { MainContentComponent } from '../layout/main-content/main-content.component';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -104,6 +106,8 @@ import { RouterModule } from '@angular/router';
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
+    HttpClientModule,
+    FlexLayoutModule
   ],
   exports: [
     A11yModule,
@@ -152,6 +156,8 @@ import { RouterModule } from '@angular/router';
     ScrollingModule,
     FormsModule,
     ReactiveFormsModule,
+    HttpClientModule,
+    FlexLayoutModule,
     SideNavComponent,
     TopBarComponent,
     MainContentComponent
