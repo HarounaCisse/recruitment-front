@@ -7,6 +7,7 @@ import { Cv } from 'src/app/model/cv';
 import { Experience } from 'src/app/model/experience';
 import { Formation } from 'src/app/model/formation';
 import { CvService } from 'src/app/recruitment-manager/service/cv.service';
+import { FormationService } from 'src/app/recruitment-manager/service/formation.service';
 
 @Component({
   selector: 'app-cv-form',
@@ -16,6 +17,8 @@ import { CvService } from 'src/app/recruitment-manager/service/cv.service';
 export class CvFormComponent implements OnInit {
 
   cv: Cv;
+  formation: Formation;
+  formations: Formation[]=[];
   form: FormGroup
   options: string[] = ['One', 'Two', 'Three'];
   filteredOptions: Observable<string[]>;
@@ -33,24 +36,22 @@ export class CvFormComponent implements OnInit {
   //
   constructor(private fb: FormBuilder,
     private cvService:CvService,
+    private formationService:FormationService,
     private router:Router) {
 
    }
 
   ngOnInit(): void {
-
-    this.cv = new Cv();
-    this.cv.experience = new Experience();
-    this.cv.formation = new Formation();
+    this.fetchCvId();
+    //this.cv = new Cv();
+   // this.cv.experience = new Experience();
+    this.formation = new Formation();
+    //this.formation.cv.id = this.cv.id
     // this.buildForm();
 
     //Stepper
     this.stepperFormBuilder();
-    // this.thirdFormGroup = this.fb.group({
-    //   etablissement: [''],
-    //   niveau: [''],
-    //   domaine: ['']
-    // })
+
 
   }
    /**
@@ -63,16 +64,13 @@ export class CvFormComponent implements OnInit {
       phoneNumer: ['', Validators.required]
     });
     this.secondFormGroup = this.fb.group({
-     // secondCtrl: ['', Validators.required],
       titre: ['', Validators.required],
       employeur: ['', Validators.required],
       lieu: ['', Validators.required]
     });
     this.thirdFormGroup = this.fb.group({
-      formation: this.fb.array([this.buildClass()]),
-      // etablissement: [''],
-      // niveau: [''],
-      // domaine: ['']
+      formation: this.fb.array([this.buildFormation()]),
+
     });
     this.getFirstFormData();
     this.getSecondFormData();
@@ -97,70 +95,58 @@ export class CvFormComponent implements OnInit {
      * getThirdFormData
      */
     private getThirdFormData() {
-      // this.thirdFormGroup.get('etablissement').valueChanges.subscribe(value => this.cv.formation.etablissement = value)
-      // this.thirdFormGroup.get('niveau').valueChanges.subscribe(value => this.cv.formation.niveau = value)
-      // this.thirdFormGroup.get('domaine').valueChanges.subscribe(value => this.cv.formation.domaine = value)
-      // this.thirdFormGroup.get('studies.etablissement').valueChanges.subscribe(value => this.cv.formation.etablissement = value);
-      // this.thirdFormGroup.get(['studies','etablissement']).valueChanges.subscribe(value => this.cv.formation.etablissement = value);
-      // this.thirdFormGroup.get(['studies','niveau']).valueChanges.subscribe(value => this.cv.formation.niveau = value);
-      // this.thirdFormGroup.get(['studies','domaine']).valueChanges.subscribe(value => this.cv.formation.domaine = value)
+      const formArr = this.thirdFormGroup.get('formation')
+      formArr.valueChanges.subscribe(value => {
+        //console.log(JSON.stringify(value))
+        this.formation = value;
+        console.log(this.formation)
+      })
+
     }
 
     /**
      * addCv
      */
     public addCv() {
+      // console.log(this.thirdFormGroup.value);
       this.cvService.addCv(this.cv).subscribe(() =>{
       this.router.navigate(['/offers']);
       })
     }
-    addClass(): void {
-      this.studies.push(this.buildClass());
+    /**
+     * addFormationList
+     */
+    public addFormationList() {
+      this.formationService.addFormation(this.cv.id, this.formation)
+              .subscribe(()=>{
+                console.log(this.formation)
+              })
+    }
+    /**
+     * fetchCvId
+     */
+    public fetchCvId() {
+      this.cvService.getById(19).subscribe(data=>{
+        this.cv = data;
+      })
+    }
+    addFormation(): void {
+      this.studies.push(this.buildFormation());
     }
 
-    deleteClass(index: number): void {
-      this.studies.removeAt(index);
-      this.studies.markAsDirty();
+    deleteFormation(index: number): void {
+      if(this.studies.length !== 1){
+        this.studies.removeAt(index);
+        this.studies.markAsDirty();
+      }
     }
-    buildClass(): FormGroup {
+    buildFormation(): FormGroup {
       return this.fb.group({
         etablissement: [''],
         niveau: [''],
         domaine: [''],
       });
     }
-
-
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-
-    return this.options.filter(option => option.toLowerCase().includes(filterValue));
-  }
-
-  protected buildForm(): void {
-    this.form = this.fb.group({
-      title: this.fb.control(this.cv.title, [Validators.required]),
-     experience: [this.cv.experience, [Validators.required]],
-     langues: [this.cv.langues, [Validators.required]],
-
-    });
-    this.subscribe();
-    this.filteredOptions = this.form.valueChanges.pipe(
-      startWith(''),
-      map(value => this._filter(value))
-    );
-  }
-  private subscribe(): void {
-    // if (!this.form) {
-    //   this.buildForm();
-    // }
-    this.form.get('title').valueChanges.subscribe(value => this.cv.title = value);
-    this.form.get('experience').valueChanges.subscribe(value => this.cv.experience = value);
-    this.form.get('langues').valueChanges.subscribe(value => this.cv.langues = value);
-
-
-
-  }
 
 
 }

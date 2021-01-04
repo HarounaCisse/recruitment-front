@@ -32,6 +32,6 @@ export class CvService {
 
   addCv(cv: Cv): Observable<Cv>{
    return this.http.post<Cv>(this.url + this.endPoint(),cv)
-                    .pipe(tap(x => console.log(x)))
+                    // .pipe(tap(x => console.log(x)))
   }
 }

@@ -1,78 +1,3 @@
-<!-- <div class="div-page-form" >
-  <form [formGroup]="form">
-      <div fxFlex="100" fxLayout="row">
-          <div fxFlex="48" fxLayout="column">
-
-              <mat-form-field appearance="outline">
-                  <mat-label>Titre</mat-label>
-                  <input matInput formControlName="title" required>
-                  <mat-error *ngIf="form.controls.title.errors?.required">
-                      Le champ Objet est <strong>réquis</strong>
-                  </mat-error>
-                  <mat-error *ngIf="form.controls.title.errors?.minlength">
-                      Le champ Objet doit contenir au minimum<strong> 4 caractères</strong>
-                  </mat-error>
-                  <mat-error *ngIf="form.controls.title.errors?.maxlength">
-                      Le champ Objet doit contenir au maxmum<strong> 200 caractères</strong>
-                  </mat-error>
-              </mat-form-field>
-              <mat-form-field appearance="outline">
-                  <mat-label>Langues</mat-label>
-
-                  <input type="text"
-             placeholder="Pick one"
-             aria-label="Number"
-             matInput
-             formControlName="langues"
-             [formGroup]="form"
-             [matAutocomplete]="auto">
-      <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-          {{option}}
-        </mat-option>
-      </mat-autocomplete>
-                  <mat-error *ngIf="form.controls.langues.errors?.required">
-                      Le champ Montant est <strong>réquis</strong>
-                  </mat-error>
-              </mat-form-field>
-
-              <div>
-
-                  <div class="button-item" >
-                      <button mat-raised-button class="add" [disabled]="!form.valid">
-                          Enregistrer <i class="material-icons">check</i>
-                      </button>
-                  </div>
-
-                  <div class="button-item">
-                      <button mat-raised-button class="edit" [disabled]="!form.valid">
-                          Modifier <i class="material-icons">check</i>
-                      </button>
-                  </div>
-
-              </div>
-          </div>
-          <div fxFlex="4" fxLayout="column"></div>
-          <div fxFlex="48" fxLayout="column">
-
-              <mat-form-field appearance="outline">
-                  <mat-label>Experience </mat-label>
-                  <input name="Réference" matInput formControlName="experience" placeholder="experience" required>
-                  <mat-error *ngIf="form.controls.experience.errors?.required">
-                      Le champ Réference est <strong>réquis</strong>
-                  </mat-error>
-              </mat-form-field>
-
-          </div>
-      </div>
-
-  </form>
-
-</div> -->
-
-<!-- <button mat-raised-button (click)="isLinear = !isLinear" id="toggle-linear">
-  {{!isLinear ? 'Enable linear mode' : 'Disable linear mode'}}
-</button> -->
 <mat-vertical-stepper [linear]="isLinear" #stepper>
   <mat-step [stepControl]="firstFormGroup">
     <form [formGroup]="firstFormGroup" class="form">
@@ -90,7 +15,7 @@
         <input matInput placeholder="Numero" formControlName="phoneNumer" required>
       </mat-form-field>
       <div>
-        <button mat-button matStepperNext>Next</button>
+        <button mat-button matStepperNext title="NEXT"><mat-icon>navigate_next</mat-icon></button>
       </div>
     </form>
   </mat-step>
@@ -110,8 +35,8 @@
         <input matInput formControlName="lieu" placeholder="Address" required>
       </mat-form-field>
       <div>
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext>Next</button>
+        <button mat-button matStepperPrevious title="Back"><mat-icon>navigate_before</mat-icon></button>
+        <button mat-button matStepperNext title="Next"><mat-icon>navigate_next</mat-icon></button>
       </div>
     </form>
   </mat-step>
@@ -119,14 +44,16 @@
     <mat-step [stepControl]="thirdFormGroup">
 
       <ng-template matStepLabel>FORMATION</ng-template>
-      <form [formGroup]="thirdFormGroup">
+      <form [formGroup]="thirdFormGroup" (ngSubmit)="addFormationList()">
         <div formArrayName="formation" *ngFor="let study of studies.controls; let i=index">
           <div [formGroupName]="i">
             <mat-form-field class="full-width">
               <mat-label>Etablissement</mat-label>
               <input matInput formControlName="etablissement" placeholder="Etablissement" >
             </mat-form-field>
-            <button mat-button title="Supprimer cette formation" (click)="deleteClass(i)">Delete Class
+            <button class="add" color="primary" mat-button (click)="addFormation()" title="ajouter une formation"><mat-icon>add</mat-icon></button>
+
+            <button mat-button title="Supprimer cette formation" (click)="deleteFormation(i)"><mat-icon>close</mat-icon>
             </button>
             <mat-form-field class="full-width">
               <mat-label>Domaine</mat-label>
@@ -140,7 +67,7 @@
         </div>
 
         <div>
-          <button class="add" mat-button fxFill (click)="addClass()">Ajouter</button>
+          <button type="submit" mat-button>SubmitBtn</button>
           <!-- <button class="add" mat-button fxFill (click)="deleteClass()">Supprimer</button> -->
         </div>
       </form>
