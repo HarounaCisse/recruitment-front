@@ -34,4 +34,9 @@ export class CvService {
    return this.http.post<Cv>(this.url + this.endPoint(),cv)
                     // .pipe(tap(x => console.log(x)))
   }
+
+  upDate(cvId: number, cv: Cv): Observable<Cv>{
+    return this.http.put<Cv>(this.url + this.endPoint() + `/${cvId}`,cv)
+
+   }
 }

@@ -1,11 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarRef, MatSnackBarVerticalPosition, SimpleSnackBar } from '@angular/material/snack-bar';
+import { MatVerticalStepper } from '@angular/material/stepper';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import { Cv } from 'src/app/model/cv';
 import { Experience } from 'src/app/model/experience';
 import { Formation } from 'src/app/model/formation';
+import { Langues } from 'src/app/model/langues.enum';
 import { CvService } from 'src/app/recruitment-manager/service/cv.service';
 import { FormationService } from 'src/app/recruitment-manager/service/formation.service';
 
@@ -18,13 +21,16 @@ export class CvFormComponent implements OnInit {
 
   cv: Cv;
   formation: Formation;
-  formations: Formation[]=[];
   form: FormGroup
-  options: string[] = ['One', 'Two', 'Three'];
+  options: string[] = [Langues.AUCUN, Langues.DEBUTANT, Langues.INTERMEDIAIRE, Langues.AVANCE];
   filteredOptions: Observable<string[]>;
 
   //Stepper
   isLinear = false;
+  @ViewChild(MatVerticalStepper) stepper: MatVerticalStepper;
+  horizontalPosition: MatSnackBarHorizontalPosition = 'center';
+  verticalPosition: MatSnackBarVerticalPosition = 'top';
+
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
   thirdFormGroup: FormGroup;
@@ -37,22 +43,33 @@ export class CvFormComponent implements OnInit {
   constructor(private fb: FormBuilder,
     private cvService:CvService,
     private formationService:FormationService,
-    private router:Router) {
+    private router:Router,
+    private _snackBar: MatSnackBar) {
 
    }
 
   ngOnInit(): void {
-    this.fetchCvId();
-    //this.cv = new Cv();
-   // this.cv.experience = new Experience();
+    if(this.cv){
+      this.fetchCvId();
+    }
+    this.cv = new Cv();
+   this.cv.experience = new Experience();
     this.formation = new Formation();
     //this.formation.cv.id = this.cv.id
-    // this.buildForm();
 
     //Stepper
     this.stepperFormBuilder();
+    //Filter
+    this.filteredOptions = this.firstFormGroup.get('langues').valueChanges
+      .pipe(
+        startWith(''),
+        map(value => this._filter(value))
+      );
 
-
+  }
+  private _filter(value: Langues): string[] {
+    const filterValue = value.toLowerCase();
+    return this.options.filter(option => option.toLowerCase().includes(filterValue));
   }
    /**
      * stepperFormBuilder
@@ -61,7 +78,8 @@ export class CvFormComponent implements OnInit {
     this.firstFormGroup = this.fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      phoneNumer: ['', Validators.required]
+      phoneNumer: ['', Validators.required],
+      langues:['']
     });
     this.secondFormGroup = this.fb.group({
       titre: ['', Validators.required],
@@ -81,6 +99,7 @@ export class CvFormComponent implements OnInit {
      */
     private getFirstFormData() {
       this.firstFormGroup.get('firstName').valueChanges.subscribe(value => this.cv.title = value);
+      this.firstFormGroup.get('langues').valueChanges.subscribe(value => this.cv.langues = value);
     }
 
     /**
@@ -109,24 +128,39 @@ export class CvFormComponent implements OnInit {
      */
     public addCv() {
       // console.log(this.thirdFormGroup.value);
-      this.cvService.addCv(this.cv).subscribe(() =>{
-      this.router.navigate(['/offers']);
+      this.cvService.addCv(this.cv).subscribe(data =>{
+        this.cv = data;
+        this.openSnackBar('ENREGISTRE')
       })
     }
+
+    /**
+     * addExperience
+     */
+    public addExperience() {
+      this.cvService.upDate(this.cv.id, this.cv)
+        .subscribe(() => {
+          this.openSnackBar('ENREGISTRE')
+          this.stepper.next()
+        })
+    }
+
     /**
      * addFormationList
      */
     public addFormationList() {
+      if(this.cv.id === this.cv.id)
       this.formationService.addFormation(this.cv.id, this.formation)
               .subscribe(()=>{
-                console.log(this.formation)
+                this.openSnackBar('ENREGISTRE')
+               this.router.navigate(['/offers']);
               })
     }
     /**
      * fetchCvId
      */
-    public fetchCvId() {
-      this.cvService.getById(19).subscribe(data=>{
+    private fetchCvId() {
+      this.cvService.getById(this.cv.id).subscribe(data=>{
         this.cv = data;
       })
     }
@@ -147,6 +181,14 @@ export class CvFormComponent implements OnInit {
         domaine: [''],
       });
     }
+
+    openSnackBar(message: string, action?: string): MatSnackBarRef<SimpleSnackBar>{
+      return this._snackBar.open(message, action, {
+         duration: 2000,
+         horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+       });
+     }
 
 
 }
