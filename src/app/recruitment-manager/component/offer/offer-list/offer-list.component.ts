@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { MatPaginator } from '@angular/material/paginator';
 import { Router } from '@angular/router';
+import { map } from 'rxjs/operators';
 import { Offer } from 'src/app/model/offer';
 import { OfferService } from 'src/app/recruitment-manager/service/offer.service';
 
@@ -11,6 +14,12 @@ import { OfferService } from 'src/app/recruitment-manager/service/offer.service'
 export class OfferListComponent implements OnInit {
   offer: Offer;
   offers: Offer[]=[];
+
+  toppings = new FormControl();
+  toppingList: string[] = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
   constructor(private offerService:OfferService,
     private route:Router) { }
 
@@ -21,6 +30,11 @@ export class OfferListComponent implements OnInit {
     }, (err)=>{
       console.log("probleme : ", err)
    })
+  }
+
+  ngAfterViewInit() {
+    //this should be implemented
+     this.paginator
   }
 
   detail(){

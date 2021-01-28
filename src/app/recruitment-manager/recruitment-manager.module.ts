@@ -10,6 +10,7 @@ import { CvFormComponent } from './component/cv/cv-form/cv-form.component';
 import { CvListComponent } from './component/cv/cv-list/cv-list.component';
 import { SharedModule } from '../shared/shared.module';
 import { OfferDetailComponent } from './component/offer/offer-detail/offer-detail.component';
+import { CvEditComponent } from './component/cv/cv-edit/cv-edit.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { OfferDetailComponent } from './component/offer/offer-detail/offer-detai
     OfferFormComponent,
     CvListComponent,
     CvFormComponent,
-    OfferDetailComponent],
+    OfferDetailComponent,
+    CvEditComponent],
   imports: [
     CommonModule,
     SharedModule,

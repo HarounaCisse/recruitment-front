@@ -1,0 +1,98 @@
+<div *ngIf="cvToUpdate">
+  <mat-vertical-stepper [linear]="isLinear" #stepper>
+    <mat-step [stepControl]="firstFormGroup">
+      <form [formGroup]="firstFormGroup" (ngSubmit)="addCv()">
+        <ng-template matStepLabel>Profil</ng-template>
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Titre</mat-label>
+          <input matInput placeholder="Titre" formControlName="title" required>
+        </mat-form-field>
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Prenom</mat-label>
+          <input matInput placeholder="Prenom" formControlName="lastName" >
+        </mat-form-field>
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Numero</mat-label>
+          <input matInput placeholder="Numero" formControlName="phoneNumer" >
+        </mat-form-field>
+        <mat-form-field class="full-width" appearance="outline">
+          <input matInput
+          placeholder="Langue"
+          formControlName="langues"
+          [matAutocomplete]="auto" required>
+   <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+     <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+       {{option}}
+     </mat-option>
+   </mat-autocomplete>
+        </mat-form-field>
+
+        <div>
+          <button mat-button matStepperNext title="NEXT" type="submit"><mat-icon>navigate_next</mat-icon></button>
+        </div>
+        <div>
+          <button mat-button  title="TestBtn" (click)="dummyData()"><mat-icon>navigate_next</mat-icon> <span>Test Button</span> </button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup">
+      <form [formGroup]="secondFormGroup" (ngSubmit)="addExperience()">
+        <ng-template matStepLabel>EXPERIENCE</ng-template>
+        <mat-form-field class="full-width">
+          <mat-label>Titre</mat-label>
+          <input matInput formControlName="titre" placeholder="Titre" required>
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <mat-label>Employeur</mat-label>
+          <input matInput formControlName="employeur" placeholder="Employeur" required>
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <mat-label>Address</mat-label>
+          <input matInput formControlName="lieu" placeholder="Address" required>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperPrevious title="Back"><mat-icon>navigate_before</mat-icon></button>
+          <button mat-button matStepperNext title="Next" type="submit"><mat-icon>navigate_next</mat-icon></button>
+        </div>
+      </form>
+    </mat-step>
+    <div>
+      <mat-step [stepControl]="thirdFormGroup">
+
+        <ng-template matStepLabel>FORMATION</ng-template>
+        <form [formGroup]="thirdFormGroup" (ngSubmit)="addFormationList()">
+          <div formArrayName="formation" *ngFor="let study of studies.controls; let i=index">
+            <div [formGroupName]="i">
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Etablissement</mat-label>
+                <input matInput formControlName="etablissement" placeholder="Etablissement" >
+              </mat-form-field>
+              <button class="add" color="primary" mat-button (click)="addFormation()" title="ajouter une formation"><mat-icon>add</mat-icon></button>
+
+              <button mat-button title="Supprimer cette formation" (click)="deleteFormation(i)"><mat-icon>close</mat-icon>
+              </button>
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Domaine</mat-label>
+                <input matInput formControlName="domaine" placeholder="Domaine" >
+              </mat-form-field>
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Niveau</mat-label>
+                <input matInput formControlName="niveau" placeholder="Niveau" >
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div>
+            <button type="submit" mat-button>SubmitBtn</button>
+          </div>
+        </form>
+      </mat-step>
+    </div>
+
+  </mat-vertical-stepper>
+</div>
+<div *ngIf="!cvToUpdate">
+  <h4>Error occured</h4>
+</div>
+
+<!-- <app-cv-form [cvEdit]="cvToUpdate"></app-cv-form> -->

@@ -1,33 +1,61 @@
-.flex-container{
+.flex-container {
   display: flex;
-  // flex-direction: column;
+  flex-direction: column;
 }
-.flex-filter{
- flex-direction: column;
+.flex-filter {
+  //  flex-direction: column;
+  position: relative;
+  background-color: rgba(160, 155, 155, 0.1);
+  width: 100%;
+  //margin: 8px;
 }
-.offer-card {
-  // flex-direction: column;
-  // flex-wrap: wrap;
-  margin: 10px;
-  max-width: 350px;
-  max-height: 150px;
-  display: flex;
-  justify-content:space-between
+.field {
+  margin: 2px;
+  margin-right: 2px;
+  position: relative;
+  top: 4px;
+  bottom: 4px;
+  left: 4px;
+  right: 4px;
+}
+.addBtn {
+  position: absolute;
+  bottom: 20px;
+  left: 90%;
+}
 
-  // max-width: 100px;
-  // width: 80%;
-}
-.offer-card p{
-transition-property: all;
-justify-self:auto
-}
-.flx-item{
+#main {
   display: flex;
-  flex-basis: 100%;
   flex-wrap: wrap;
-  flex-direction: row;
 }
-// .flex-item .offer-card{
-//   width: 350px;
-//   height: 300px;
+.flx-item {
+  position: relative;
+  padding: 2px;
+}
+#card {
+  margin: 8px;
+  padding: 8px;
+  max-width: 100%;
+  max-height: 100%;
+  width: 350px;
+  height: 95px;
+  position: relative;
+}
+.head {
+  // width: 100%;
+  text-transform: uppercase;
+}
+// .desc{
+//   width: 100%;
+//   position: absolute;
 // }
+// .desc p{
+//   text-align: center;
+//   position: absolute;
+// }
+a {
+  text-decoration: none;
+}
+mat-card-title{
+  opacity: 0.5;
+}

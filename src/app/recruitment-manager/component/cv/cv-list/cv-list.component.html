@@ -1,1 +1,53 @@
-<p>cv-list works!</p>
+<div *ngIf="!cv">
+  <button class="add" color="primary" mat-button (click)="create()" title="Créer un nouveau cv"><mat-icon>add</mat-icon><span>Créer un nouveau</span></button>
+</div>
+<div *ngIf="cv">
+  <mat-card class="a-card">
+    <mat-card-title>Titre: {{cv.title}}</mat-card-title>
+    <div>{{cv.title}}</div>
+    <div>{{cv.langues}}</div>
+    <mat-card-subtitle>Corp Name</mat-card-subtitle>
+    <mat-divider [inset]="true"></mat-divider>
+    <div>{{cv.experience.titre}}</div>
+    <div>{{cv.experience.nomEmployeur}}</div>
+    <mat-card-subtitle>Maliware LLC Corporation</mat-card-subtitle>
+    <!-- <mat-divider></mat-divider> -->
+  </mat-card>
+
+  <mat-card class="a-card">
+    <mat-card-title>Competence</mat-card-title>
+    <mat-chip-list aria-label="Competence selection">
+      <mat-chip>JavaScript</mat-chip>
+      <mat-chip>Two fish</mat-chip>
+      <mat-chip color="primary" selected>Primary fish</mat-chip>
+      <mat-chip color="accent" selected>Accent fish</mat-chip>
+    </mat-chip-list>
+  </mat-card>
+
+  <mat-card class="a-card">
+    <mat-card-title>Experience professionnelle</mat-card-title>
+    <div>15/52/2000</div>
+    <div>Titre</div>
+    <mat-card-subtitle>Corp Name</mat-card-subtitle>
+    <mat-divider [inset]="true"></mat-divider>
+    <div>15/52/2000</div>
+    <div>System Admin</div>
+    <mat-card-subtitle>Maliware LLC Corporation</mat-card-subtitle>
+    <!-- <mat-divider></mat-divider> -->
+  </mat-card>
+
+  <button class="edit" color="primary" mat-button title="Modifier le cv"
+   (click)="edit()" ><mat-icon>edit</mat-icon><span>Modifier</span></button>
+  <mat-card class="a-card">
+    <mat-card-title>Formation</mat-card-title>
+    <div>15/52/2000</div>
+    <div>Eng of Baby Care</div>
+    <mat-card-subtitle>School Name</mat-card-subtitle>
+    <mat-divider [inset]="true"></mat-divider>
+    <div>15/52/2000</div>
+    <div>Eng of Baby Care</div>
+    <mat-card-subtitle>School Name</mat-card-subtitle>
+    <!-- <mat-divider></mat-divider> -->
+  </mat-card>
+</div>
+

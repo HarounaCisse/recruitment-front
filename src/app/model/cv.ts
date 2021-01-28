@@ -7,7 +7,7 @@ export class Cv {
   id: number;
   title: string;
   experience: Experience;
-  formation: Formation;
+  //formation: Formation;
   langues: Langues;
   experienceLevel: ExperienceLevel;
 }
