@@ -1,0 +1,27 @@
+<div *ngIf="!userSelectedOffers$">
+  <div> VOus n'avez pas encore postuler aux offres</div>
+ </div>
+<div *ngIf="userSelectedOffers$ | async as userOffers" fxLayout="row">
+  <div class="fullCard" id="thumbnail" *ngFor="let item of userOffers">
+    <div class="cardContent" >
+      <div class="cardText" >
+        <h4 >{{item.title}}</h4>
+        <!-- <hr> -->
+        <mat-divider></mat-divider>
+        <p><em>{{item.description}}</em></p>
+      </div>
+      <div class="cardLinks">
+        <a href="https://en.wikipedia.org/wiki/Larry_Page" target="_blank" class="links">Larry Page</a><br><br>
+        <a href="https://en.wikipedia.org/wiki/Sergey_Brin" target="_blank" class="links">Sergey Brin</a>
+      </div>
+    </div>
+  </div>
+
+</div>
+<!-- <div>
+  <mat-card>Simple data</mat-card>
+  <mat-card-header>Heading page</mat-card-header>
+</div> -->
+
+<!-- *ngIf="userSelectedOffers$ | async as userOffers"
+    *ngFor="let item of userOffers" -->

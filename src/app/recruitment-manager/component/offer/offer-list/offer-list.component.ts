@@ -1,7 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Offer } from 'src/app/model/offer';
 import { OfferService } from 'src/app/recruitment-manager/service/offer.service';
@@ -9,11 +10,15 @@ import { OfferService } from 'src/app/recruitment-manager/service/offer.service'
 @Component({
   selector: 'app-offer-list',
   templateUrl: './offer-list.component.html',
-  styleUrls: ['./offer-list.component.scss']
+  styleUrls: ['./offer-list.component.scss'],
+  //To improve performance by minimizing change
+  //detection cycles in this case(|async) comp is only
+  //checked when a bound observable emit an event
+  changeDetection:ChangeDetectionStrategy.OnPush
 })
 export class OfferListComponent implements OnInit {
   offer: Offer;
-  offers: Offer[]=[];
+  offers$: Observable<Offer[]>;
 
   toppings = new FormControl();
   toppingList: string[] = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];
@@ -24,12 +29,7 @@ export class OfferListComponent implements OnInit {
     private route:Router) { }
 
   ngOnInit(): void {
-    this.offerService.getAll().subscribe((data) => {
-      this.offers = data? data : [];
-      // console.log(data);
-    }, (err)=>{
-      console.log("probleme : ", err)
-   })
+    this.offers$ = this.offerService.getAll();
   }
 
   ngAfterViewInit() {

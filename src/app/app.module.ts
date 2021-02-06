@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RecruitmentManagerModule } from './recruitment-manager/recruitment-manager.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { CvManagerModule } from './cv-manager/cv-manager.module';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     FlexLayoutModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    RecruitmentManagerModule
+    RecruitmentManagerModule,
+    CvManagerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

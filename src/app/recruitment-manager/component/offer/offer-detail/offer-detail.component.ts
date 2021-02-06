@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { Offer } from 'src/app/model/offer';
+import { CvService } from 'src/app/recruitment-manager/service/cv.service';
 import { OfferService } from 'src/app/recruitment-manager/service/offer.service';
 
 @Component({
@@ -10,20 +12,25 @@ import { OfferService } from 'src/app/recruitment-manager/service/offer.service'
 })
 export class OfferDetailComponent implements OnInit {
 
-  offer: Offer;
+  offer$: Observable<Offer>;
+
+  panelOpenState = false;
   constructor(private activeRoute: ActivatedRoute,
-    private offerService:OfferService) { }
+    private offerService:OfferService,
+    private cvService: CvService,
+    private route: Router) { }
 
   ngOnInit(): void {
-    this.activeRoute.params.subscribe(param =>{
-      let id = +param['id'];
-      if(id){
-        this.offerService.getById(id).subscribe(data =>
-          {
-            this.offer = data
-          }) ;
-      }
-     });
+    const paramId = +this.activeRoute.snapshot.paramMap.get('id');
+    console.log(paramId)
+    this.offer$ = this.offerService.getById(paramId);
+     console.log(this.offer$)
+  }
+
+  postuler(id: number){
+    this.offerService.postuler(id, this.cvService.cv.id).subscribe(()=>{
+      this.route.navigate(['/offers']);
+    })
   }
 
 }

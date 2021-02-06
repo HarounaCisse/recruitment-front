@@ -1,5 +1,7 @@
-<div *ngIf="!cv">
-  <button class="add" color="primary" mat-button (click)="create()" title="Créer un nouveau cv"><mat-icon>add</mat-icon><span>Créer un nouveau</span></button>
+<div id="btn">
+  <div *ngIf="!cv" class="addbtn">
+    <button class="add" color="primary" mat-button (click)="create()" title="Créer un nouveau cv"><mat-icon>add</mat-icon><span>Créer un nouveau</span></button>
+  </div>
 </div>
 <div *ngIf="cv">
   <mat-card class="a-card">

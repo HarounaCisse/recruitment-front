@@ -31,8 +31,10 @@
       </div>
     </form>
   </mat-step>
-  <mat-step>
-    <form>
+  <mat-step [stepControl]="comptenceFormGroup">
+    <!--  -->
+    <form [formGroup]="comptenceFormGroup">
+      <!--  -->
       <ng-template matStepLabel>COPETENCE</ng-template>
       <mat-form-field class="full-width" appearance="outline">
         <mat-label>Competence</mat-label>
@@ -48,23 +50,26 @@
           <input
             placeholder="New competence..."
             #fruitInput
-            [formControl]="fruitCtrl"
-            [matAutocomplete]="auto"
+            formControlName="competence"
+            [matAutocomplete]="auto2"
             [matChipInputFor]="chipList"
             [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
             (matChipInputTokenEnd)="add($event)">
         </mat-chip-list>
-        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
-          <mat-option *ngFor="let fruit of filteredFruits | async" [value]="fruit">
-            {{fruit}}
+        <mat-autocomplete #auto2="matAutocomplete" (optionSelected)="selected($event)">
+          <mat-option *ngFor="let comptc of filteredFruits | async" [value]="comptc">
+            {{comptc}}
           </mat-option>
         </mat-autocomplete>
       </mat-form-field>
 
+      <div>
+        <button mat-button matStepperNext title="NEXT" (click)="addCompetence()"><mat-icon>navigate_next</mat-icon></button>
+      </div>
     </form>
   </mat-step>
   <mat-step [stepControl]="secondFormGroup">
-    <form [formGroup]="secondFormGroup" (ngSubmit)="addExperience()">
+    <form [formGroup]="secondFormGroup" novalidate (ngSubmit)="addExperience()">
       <ng-template matStepLabel>EXPERIENCE</ng-template>
       <mat-form-field class="full-width">
         <mat-label>Titre</mat-label>

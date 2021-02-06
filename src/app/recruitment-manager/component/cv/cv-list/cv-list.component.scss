@@ -8,9 +8,19 @@
 mat-divider{
   margin-bottom: 8px;
 }
+#btn{
+  padding: 12px;
+  // margin: auto;
+}
+.addbtn{
+ // display: inline-block;
+ text-align: center;
+ padding: 5px;
+}
 .add{
   //Non EFFECT for now
   text-align: justify;
+  padding: 8px;
 }
 .edit{
  position: relative;

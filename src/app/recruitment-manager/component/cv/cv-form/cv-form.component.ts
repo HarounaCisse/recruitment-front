@@ -1,9 +1,9 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatVerticalStepper } from '@angular/material/stepper';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
+import {filter, map, startWith, tap} from 'rxjs/operators';
 import { Cv } from 'src/app/model/cv';
 import { Experience } from 'src/app/model/experience';
 import { Formation } from 'src/app/model/formation';
@@ -15,16 +15,20 @@ import { UtilityService } from 'src/app/recruitment-manager/service/utility.serv
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import { MatAutocomplete, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
+import { CompetenceService } from 'src/app/recruitment-manager/service/competence.service';
+import { Competence } from 'src/app/model/competence';
 
 @Component({
   selector: 'app-cv-form',
   templateUrl: './cv-form.component.html',
-  styleUrls: ['./cv-form.component.scss']
+  styleUrls: ['./cv-form.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CvFormComponent implements OnInit {
 
   cv: Cv;
-  @Input() cvEdit: Cv;
+  ///@Input() cvEdit: Cv;
+  competence: Competence;
   formation: Formation;
   form: FormGroup
   options: string[] = [Langues.AUCUN, Langues.DEBUTANT, Langues.INTERMEDIAIRE, Langues.AVANCE];
@@ -39,6 +43,7 @@ export class CvFormComponent implements OnInit {
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
   thirdFormGroup: FormGroup;
+  comptenceFormGroup: FormGroup;
 
   get studies(): FormArray {
     return this.thirdFormGroup.get('formation') as FormArray;
@@ -50,9 +55,10 @@ export class CvFormComponent implements OnInit {
   separatorKeysCodes: number[] = [ENTER, COMMA];
   fruitCtrl = new FormControl();
   filteredFruits: Observable<string[]>;
-  fruits: string[] = ['Lemon'];
-  allFruits: string[] = ['Apple', 'Lemon', 'Lime', 'Orange', 'Strawberry'];
 
+  allFruits: string[] = [];
+  fruits: string[] = [];
+  competences$: string[];
   @ViewChild('fruitInput') fruitInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto') matAutocomplete: MatAutocomplete;
 
@@ -62,11 +68,9 @@ export class CvFormComponent implements OnInit {
     private cvService:CvService,
     private formationService:FormationService,
     private router:Router,
-    private notify: UtilityService) {
+    private notify: UtilityService,
+    private competenceService: CompetenceService) {
 
-      this.filteredFruits = this.fruitCtrl.valueChanges.pipe(
-        startWith(null),
-        map((fruit: string | null) => fruit ? this.filter(fruit) : this.allFruits.slice()))
    }
 
   ngOnInit(): void {
@@ -76,8 +80,10 @@ export class CvFormComponent implements OnInit {
     this.cv = new Cv();
    this.cv.experience = new Experience();
     this.formation = new Formation();
+    //this.competence = [];
+    this.competence = new Competence();
     //this.formation.cv.id = this.cv.id
-    this.cvEdit = this.cv;
+    //this.cvEdit = this.cv;
     //Stepper
     this.stepperFormBuilder();
     //Filter
@@ -86,8 +92,18 @@ export class CvFormComponent implements OnInit {
         startWith(''),
         map(value => this._filter(value))
       );
+      this.filteredFruits = this.comptenceFormGroup.get('competence').valueChanges.pipe(
+        startWith(''),
+        map((fruit: string | null) => fruit ? this.filter(fruit) : this.allFruits.slice()))
 
+       this.competenceService.competencesList$.pipe(
+         map(competences => competences.map(comp => {
+           ///this.competences$ = comp.competence
+           this.allFruits.push(comp.competence)
+
+          }))).subscribe(()=> console.log(this.allFruits))
   }
+  //End OnInit
   private _filter(value: Langues): string[] {
     const filterValue = value.toLowerCase();
     return this.options.filter(option => option.toLowerCase().includes(filterValue));
@@ -111,9 +127,13 @@ export class CvFormComponent implements OnInit {
       formation: this.fb.array([this.buildFormation()]),
 
     });
+    this.comptenceFormGroup = this.fb.group({
+      competence:['']
+    })
     this.getFirstFormData();
     this.getSecondFormData();
     this.getThirdFormData();
+    this.getCompetenceFormData();
     }
     /**
      * getFirstFormData
@@ -142,6 +162,13 @@ export class CvFormComponent implements OnInit {
         //console.log(this.formation)
       })
 
+    }
+
+    // ADD COMPT
+    getCompetenceFormData(){
+     const compt = this.comptenceFormGroup.get('competence');
+     compt.valueChanges
+      .subscribe(value => this.competence.competence = value);
     }
 
     /**
@@ -205,6 +232,13 @@ export class CvFormComponent implements OnInit {
       });
     }
 
+    /**
+     * addCompetence
+     */
+    public addCompetence() {
+      this.competenceService.addCompetence(this.cv.id,this.competence)
+      .subscribe(data => console.log("See Compt :"+data))
+    }
 
     add(event: MatChipInputEvent): void {
       const input = event.input;
@@ -220,7 +254,7 @@ export class CvFormComponent implements OnInit {
         input.value = '';
       }
 
-      this.fruitCtrl.setValue(null);
+      this.comptenceFormGroup.get("competence").setValue(null);
     }
 
     remove(fruit: string): void {
@@ -234,13 +268,13 @@ export class CvFormComponent implements OnInit {
     selected(event: MatAutocompleteSelectedEvent): void {
       this.fruits.push(event.option.viewValue);
       this.fruitInput.nativeElement.value = '';
-      this.fruitCtrl.setValue(null);
+      this.comptenceFormGroup.get("competence").setValue(null);
     }
 
     private filter(value: string): string[] {
       const filterValue = value.toLowerCase();
 
-      return this.allFruits.filter(fruit => fruit.toLowerCase().indexOf(filterValue) === 0);
+      return this.allFruits?.filter(fruit => fruit.toLowerCase().indexOf(filterValue) === 0);
     }
 
 }

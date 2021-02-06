@@ -6,11 +6,12 @@ import { RecruitmentComponent } from './recruitment.component';
 
 import { OfferListComponent } from './component/offer/offer-list/offer-list.component';
 import { OfferFormComponent } from './component/offer/offer-form/offer-form.component';
-import { CvFormComponent } from './component/cv/cv-form/cv-form.component';
-import { CvListComponent } from './component/cv/cv-list/cv-list.component';
+// import { CvFormComponent } from './component/cv/cv-form/cv-form.component';
+// import { CvListComponent } from './component/cv/cv-list/cv-list.component';
 import { SharedModule } from '../shared/shared.module';
 import { OfferDetailComponent } from './component/offer/offer-detail/offer-detail.component';
-import { CvEditComponent } from './component/cv/cv-edit/cv-edit.component';
+// import { CvEditComponent } from './component/cv/cv-edit/cv-edit.component';
+import { UserJobListComponent } from './component/offer/user-job-list/user-job-list.component';
 
 
 @NgModule({
@@ -18,10 +19,10 @@ import { CvEditComponent } from './component/cv/cv-edit/cv-edit.component';
     RecruitmentComponent,
     OfferListComponent,
     OfferFormComponent,
-    CvListComponent,
-    CvFormComponent,
+
     OfferDetailComponent,
-    CvEditComponent],
+
+    UserJobListComponent],
   imports: [
     CommonModule,
     SharedModule,

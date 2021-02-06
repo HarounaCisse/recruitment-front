@@ -9,14 +9,14 @@ import { CvService } from '../service/cv.service';
 })
 export class CvResolverService implements Resolve<Cv>{
 
-  private _currentCv: Cv;
+  // private _currentCv: Cv;
 
-  get currentCv(){
-    return this._currentCv;
-  }
-  set currentCv(cv: Cv){
-    this._currentCv = cv
-  }
+  // get currentCv(){
+  //   return this._currentCv;
+  // }
+  // set currentCv(cv: Cv){
+  //   this._currentCv = cv
+  // }
   constructor(private cvService: CvService) { }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Cv | Observable<Cv> | Promise<Cv> {

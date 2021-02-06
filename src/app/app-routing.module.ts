@@ -6,6 +6,10 @@ const routes: Routes = [
   {
     path: 'offers',
     loadChildren:  './recruitment-manager/recruitment-manager.module#RecruitmentManagerModule'
+  },
+  {
+    path: 'cv',
+    loadChildren:  './cv-manager/cv-manager.module#CvManagerModule'
   }
 ];
 

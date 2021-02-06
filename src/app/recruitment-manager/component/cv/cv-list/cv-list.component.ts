@@ -15,7 +15,15 @@ export class CvListComponent implements OnInit {
     private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.cv = this.cvService.cv;
+    //this.cv = this.cvService.cv;
+    if(this.cvService.cv){
+      this.cv = this.cvService.cv;
+      console.log("first cv: "+this.cv);
+    }else{
+      this.cv = null
+     // this.cv.id = 0;
+      console.log("second cv: "+this.cv);
+    }
   }
 
   create(){
