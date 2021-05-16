@@ -34,7 +34,9 @@ export class SideNavComponent implements OnInit {
   }
 
   userJobList(): void{
-    this.router.navigate(['/jobsPostule/'+ this.userCv.id])
+    if (this.userCv) {
+      this.router.navigate(['/jobsPostule/'+ this.userCv.id])
+    }
   }
 
 }

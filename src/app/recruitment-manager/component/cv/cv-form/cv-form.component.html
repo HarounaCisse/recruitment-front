@@ -6,28 +6,27 @@
         <mat-label>Nom</mat-label>
         <input matInput placeholder="Nom" formControlName="firstName" required>
       </mat-form-field>
-      <mat-form-field class="full-width" appearance="outline">
+      <!-- <mat-form-field class="full-width" appearance="outline">
         <mat-label>Prenom</mat-label>
-        <input matInput placeholder="Prenom" formControlName="lastName" >
+        <input matInput placeholder="Prenom" formControlName="lastName">
       </mat-form-field>
       <mat-form-field class="full-width" appearance="outline">
         <mat-label>Numero</mat-label>
-        <input matInput placeholder="Numero" formControlName="phoneNumer" >
-      </mat-form-field>
+        <input matInput placeholder="Numero" formControlName="phoneNumer">
+      </mat-form-field> -->
       <mat-form-field class="full-width" appearance="outline">
-        <input matInput
-        placeholder="Langue"
-        formControlName="langues"
-        [matAutocomplete]="auto" required>
- <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-   <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-     {{option}}
-   </mat-option>
- </mat-autocomplete>
+        <input matInput placeholder="Langue" formControlName="langues" [matAutocomplete]="auto" required>
+        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+          <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+            {{option}}
+          </mat-option>
+        </mat-autocomplete>
       </mat-form-field>
 
       <div>
-        <button mat-button matStepperNext title="NEXT" type="submit"><mat-icon>navigate_next</mat-icon></button>
+        <button mat-button matStepperNext title="NEXT" type="submit">
+          <mat-icon>navigate_next</mat-icon>
+        </button>
       </div>
     </form>
   </mat-step>
@@ -39,32 +38,27 @@
       <mat-form-field class="full-width" appearance="outline">
         <mat-label>Competence</mat-label>
         <mat-chip-list #chipList aria-label="Competence selection">
-          <mat-chip
-            *ngFor="let fruit of fruits"
-            [selectable]="selectable"
-            [removable]="removable"
-            (removed)="remove(fruit)">
-            {{fruit}}
+          <mat-chip *ngFor="let skill of skills" [selectable]="selectable" [removable]="removable"
+            (removed)="remove(skill)">
+            {{skill}}
             <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
           </mat-chip>
-          <input
-            placeholder="New competence..."
-            #fruitInput
-            formControlName="competence"
-            [matAutocomplete]="auto2"
-            [matChipInputFor]="chipList"
-            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+          <input placeholder="New competence..." #skillInput formControlName="competence" [matAutocomplete]="auto2"
+            [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
             (matChipInputTokenEnd)="add($event)">
         </mat-chip-list>
         <mat-autocomplete #auto2="matAutocomplete" (optionSelected)="selected($event)">
-          <mat-option *ngFor="let comptc of filteredFruits | async" [value]="comptc">
+          <mat-option *ngFor="let comptc of filteredCompetences | async" [value]="comptc">
             {{comptc}}
           </mat-option>
         </mat-autocomplete>
       </mat-form-field>
 
       <div>
-        <button mat-button matStepperNext title="NEXT" (click)="addCompetence()"><mat-icon>navigate_next</mat-icon></button>
+        <button mat-button title="NEXT" (click)="addCompetence()"
+        matStepperNext>
+          <mat-icon>navigate_next</mat-icon>
+        </button>
       </div>
     </form>
   </mat-step>
@@ -84,8 +78,12 @@
         <input matInput formControlName="lieu" placeholder="Address" required>
       </mat-form-field>
       <div>
-        <button mat-button matStepperPrevious title="Back"><mat-icon>navigate_before</mat-icon></button>
-        <button mat-button matStepperNext title="Next" type="submit"><mat-icon>navigate_next</mat-icon></button>
+        <button mat-button matStepperPrevious title="Back">
+          <mat-icon>navigate_before</mat-icon>
+        </button>
+        <button mat-button matStepperNext title="Next" type="submit">
+          <mat-icon>navigate_next</mat-icon>
+        </button>
       </div>
     </form>
   </mat-step>
@@ -93,24 +91,27 @@
     <mat-step [stepControl]="thirdFormGroup">
 
       <ng-template matStepLabel>FORMATION</ng-template>
-      <form [formGroup]="thirdFormGroup" >
+      <form [formGroup]="thirdFormGroup">
         <div formArrayName="formation" *ngFor="let study of studies.controls; let i=index">
           <div [formGroupName]="i">
             <mat-form-field class="full-width" appearance="outline">
               <mat-label>Etablissement</mat-label>
-              <input matInput formControlName="etablissement" placeholder="Etablissement" >
+              <input matInput formControlName="etablissement" placeholder="Etablissement">
             </mat-form-field>
-            <button class="add" color="primary" mat-button (click)="addFormation()" title="ajouter une formation"><mat-icon>add</mat-icon></button>
+            <button class="add" color="primary" mat-button (click)="addFormation()" title="ajouter une formation">
+              <mat-icon>add</mat-icon>
+            </button>
 
-            <button mat-button title="Supprimer cette formation" (click)="deleteFormation(i)"><mat-icon>close</mat-icon>
+            <button mat-button title="Supprimer cette formation" (click)="deleteFormation(i)">
+              <mat-icon>close</mat-icon>
             </button>
             <mat-form-field class="full-width" appearance="outline">
               <mat-label>Domaine</mat-label>
-              <input matInput formControlName="domaine" placeholder="Domaine" >
+              <input matInput formControlName="domaine" placeholder="Domaine">
             </mat-form-field>
             <mat-form-field class="full-width" appearance="outline">
               <mat-label>Niveau</mat-label>
-              <input matInput formControlName="niveau" placeholder="Niveau" >
+              <input matInput formControlName="niveau" placeholder="Niveau">
             </mat-form-field>
           </div>
         </div>

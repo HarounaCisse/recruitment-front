@@ -18,11 +18,11 @@
 
   <mat-card class="a-card">
     <mat-card-title>Competence</mat-card-title>
-    <mat-chip-list aria-label="Competence selection">
-      <mat-chip>JavaScript</mat-chip>
-      <mat-chip>Two fish</mat-chip>
+    <mat-chip-list aria-label="Competence selection" *ngFor="let skill of competenceList">
+      <mat-chip color="primary" >{{skill.competence}}</mat-chip>
+      <!-- <mat-chip color="warm">Two fish</mat-chip>
       <mat-chip color="primary" selected>Primary fish</mat-chip>
-      <mat-chip color="accent" selected>Accent fish</mat-chip>
+      <mat-chip color="accent" selected>Accent fish</mat-chip> -->
     </mat-chip-list>
   </mat-card>
 

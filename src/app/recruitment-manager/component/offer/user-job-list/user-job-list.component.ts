@@ -13,18 +13,20 @@ import { OfferService } from 'src/app/recruitment-manager/service/offer.service'
 export class UserJobListComponent implements OnInit {
 
   userSelectedOffers$: Observable<Offer[]>
-  noData: any;
+  noData: boolean = false;
   constructor(private offerService: OfferService,
     private cvService: CvService) { }
 
   ngOnInit(): void {
     const cvId  = this.cvService.cv.id
-    if(cvId){
+    if(cvId != 0){
       this.userSelectedOffers$ = this.offerService.getUserSelectedOffers(+cvId)
                     .pipe(catchError( err => {
-                      this.noData = err;
+                      //this.noData = err;
+                      console.log(err);
                       return EMPTY;
                     }));
+      this.noData = true;
     }
   }
 

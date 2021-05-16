@@ -14,7 +14,7 @@ mat-divider{
 }
 .addbtn{
  // display: inline-block;
- text-align: center;
+ text-align: start;
  padding: 5px;
 }
 .add{
@@ -26,4 +26,7 @@ mat-divider{
  position: relative;
  bottom: 5px;
   float: right;
+}
+mat-chip-list{
+  display: inline-block
 }

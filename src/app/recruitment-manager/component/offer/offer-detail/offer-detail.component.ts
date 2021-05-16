@@ -28,9 +28,11 @@ export class OfferDetailComponent implements OnInit {
   }
 
   postuler(id: number){
-    this.offerService.postuler(id, this.cvService.cv.id).subscribe(()=>{
-      this.route.navigate(['/offers']);
-    })
+    if (this.cvService.cv) {
+      this.offerService.postuler(id, this.cvService.cv.id).subscribe(()=>{
+        this.route.navigate(['/offers']);
+      })
+    }
   }
 
 }
